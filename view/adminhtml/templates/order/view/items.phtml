@@ -1,0 +1,123 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * @var \Magento\Sales\Block\Adminhtml\Order\View\Items $block
+ */
+$_order = $block->getOrder() ?>
+<div class="admin__table-wrapper">
+    <script>
+        const gridData = [];
+    </script>
+    <table id="items-table" class="data-table admin__table-primary edit-order-table" style="width: 100%;">
+        <thead>
+        <tr class="headings">
+            <?php $i = 0;
+            $columns = $block->getColumns();
+            $lastItemNumber = count($columns) ?>
+            <?php foreach ($columns as $columnName => $columnTitle) : ?>
+                <?php $i++; ?>
+                <th class="col-<?= $block->escapeHtmlAttr($columnName) ?><?= /* @noEscape */
+                ($i === $lastItemNumber ? ' last' : '') ?>">
+                    <span>
+                        <?= $block->escapeHtml($columnTitle) ?>
+                    </span>
+                </th>
+            <?php endforeach; ?>
+        </tr>
+        </thead>
+        <?php $_items = $block->getItemsCollection(); ?>
+        <?php $i = 0;
+        foreach ($_items as $_item) : ?>
+            <?php if ($_item->getParentItem()) :
+                continue;
+            else :
+                $i++;
+            endif; ?>
+            <tbody class="<?= /* @noEscape */
+            $i % 2 ? 'even' : 'odd' ?>">
+            <?= $block->getItemHtml($_item) ?>
+            <?= $block->getItemExtraInfoHtml($_item) ?>
+            </tbody>
+        <?php endforeach; ?>
+    </table>
+</div>
+<script type="text/javascript">
+    require(['jquery', 'jquerydatatable'], function ($) {
+        $(document).ready(function () {
+            $('#items-table thead tr')
+                .clone(true)
+                .addClass('filters')
+                .appendTo('#items-table thead');
+            var table = $('#items-table').DataTable({
+                data: gridData,
+                columns: [
+                    { data: 'product' },
+                    { data: 'status' },
+                    { data: 'price-original' },
+                    { data: 'price' },
+                    { data: 'qty' },
+                    { data: 'subtotal' },
+                    { data: 'tax-amount' },
+                    { data: 'tax-percent' },
+                    { data: 'discont' },
+                    { data: 'total' },
+                ],
+                paging: false,
+                orderCellsTop: false,
+                fixedHeader: false,
+                ordering: false,
+                initComplete: function () {
+                    var api = this.api();
+
+                    // For each column
+                    api
+                        .columns()
+                        .eq(0)
+                        .each(function (colIdx) {
+                            // Set the header cell to contain the input element
+                            var cell = $('.filters th').eq(
+                                $(api.column(colIdx).header()).index()
+                            );
+                            var title = $(cell).text();
+                            $(cell).html('<input type="text" size="10"/>');
+
+                            // On every keypress in this input
+                            $(
+                                'input',
+                                $('.filters th').eq($(api.column(colIdx).header()).index())
+                            )
+                                .off('keyup change')
+                                .on('keyup change', function (e) {
+                                    e.stopPropagation();
+
+                                    // Get the search value
+                                    $(this).attr('title', $(this).val());
+                                    var regexr = '({search})'; //$(this).parents('th').find('select').val();
+
+                                    var cursorPosition = this.selectionStart;
+                                    // Search the column for that value
+                                    api
+                                        .column(colIdx)
+                                        .search(
+                                            this.value != ''
+                                                ? regexr.replace('{search}', '(((' + this.value + ')))')
+                                                : '',
+                                            this.value != '',
+                                            this.value == ''
+                                        )
+                                        .draw();
+
+                                    $(this)
+                                        .focus()[0]
+                                        .setSelectionRange(cursorPosition, cursorPosition);
+                                });
+                        });
+                },
+            });
+        });
+    });
+</script>

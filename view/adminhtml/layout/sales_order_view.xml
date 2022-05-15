@@ -1,0 +1,17 @@
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="ProxiBlue_AdminSalesItemGrid::css/datatables.min.css"/>
+    </head>
+    <body>
+        <referenceBlock name="order_items">
+            <action method="setTemplate">
+                <argument name="template" xsi:type="string">ProxiBlue_AdminSalesItemGrid::order/view/items.phtml</argument>
+            </action>
+        </referenceBlock>
+        <referenceBlock name="default_order_items_renderer">
+            <action method="setTemplate">
+                <argument name="template" xsi:type="string">ProxiBlue_AdminSalesItemGrid::order/view/renderer/default.phtml</argument>
+            </action>
+        </referenceBlock>
+    </body>
+</page>

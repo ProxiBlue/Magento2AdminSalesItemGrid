@@ -1,0 +1,23 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<?php /** @var \Magento\Sales\Block\Adminhtml\Order\View\Items\Renderer\DefaultRenderer $block */ ?>
+<?php $_item = $block->getItem() ?>
+<?php $block->setPriceDataObject($_item) ?>
+<tr>
+    <?php $i = 0;
+    $columns = $block->getColumns();
+    $lastItemNumber = count($columns) ?>
+    <script>
+        let colRowData<?=$_item->getId(); ?> = {
+        <?php foreach ($columns as $columnName => $columnClass) : ?>
+        <?php $i++; ?>
+            '<?= $columnName ?>': <?= json_encode($block->getColumnHtml($_item, $columnName)) ?>,
+        <?php endforeach; ?>
+        }
+        gridData.push(colRowData<?=$_item->getId(); ?>)
+    </script>
+</tr>
