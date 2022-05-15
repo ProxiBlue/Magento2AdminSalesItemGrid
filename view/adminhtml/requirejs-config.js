@@ -1,7 +1,7 @@
 var config = {
     map: {
         '*': {
-            jquerydatatable: 'Admin_Sales/js/datatables'
+            jquerydatatable: 'ProxiBlue_AdminSalesItemGrid/js/datatables.min'
         }
     }
 };
