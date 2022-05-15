@@ -1,4 +1,4 @@
-# Magento 2 Admin Sales order View Items Grid filters
+# Magento 2 Admin Sales Order View, Items Grid filters
 
 ## Description
 
