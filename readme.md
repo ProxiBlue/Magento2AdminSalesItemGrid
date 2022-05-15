@@ -17,3 +17,11 @@ Since this 'grid' table loads all items, it is easier to make it a javascript da
 * composer require proxi-blue/admin-sales-item-grid
 * ./bin/magento setup:upgrade
 * ./bin/magento setup:di:compile
+
+## Donations
+
+If you use this in a commercial site, I'd appreciate a donation to my Cat Sugar Cube's toy fund ;)
+
+[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://paypal.me/proxiblue?locale.x=en_AU)
+
+![image](https://user-images.githubusercontent.com/4994260/119922080-abece100-bfa1-11eb-968e-79af6e94789a.png)
