@@ -13,3 +13,7 @@ Since this 'grid' table loads all items, it is easier to make it a javascript da
 
 ## Install
 
+* composer config repositories.github.repo.repman.io composer https://github.repo.repman.io
+* composer require proxi-blue/admin-sales-item-grid
+* ./bin/magento setup:upgrade
+* ./bin/magento setup:di:compile
